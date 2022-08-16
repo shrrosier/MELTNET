@@ -1,46 +1,45 @@
 clearvars
+nClasses = 10; % number of classes to be predicted by segmentation network
+
+% path to folder containing all training and validation images, should have
+% the following subfolders:
+% training_inputs/ : containing .mat files each with a 64x64x4 input array (for network training only)
+% validation_inputs/ : containing .mat files each with a 64x64x4 input array (for network validation only)
+% training_targets/ : containing single channel images that serve as the segmentation network targets (corresponding to the training_inputs/ directory)
+% validation_targets/ : containing single channel images that serve as the segmentation network targets (corresponding to the validation_inputs/ directory)
 
 imageStoreFolder = "../NClass_"+num2str(nClasses);
-
 
 load_params = false; % true if you want to load model from a previous state
 load_epoch = 1; % if above true, from what epoch do you want to load?
 
-nfilt = 3;
-iteration = 0;
-numEpochs = 600;
-LR = 0.0000005;
-momentum = 0.85;
-miniBatchSize = 16;
-imageSize = [64 64 4]; % SSC
+% segmentation network options
+nfilt = 3; % size of convolutional filters 
+numEpochs = 600; % number of epochs to train for
+LR = 0.0000005; % initial learning rate for SGDM
+momentum = 0.85; % momentum for SGDM
+miniBatchSize = 16; % number of images seen in each training iteration
+imageSize = [64 64 4]; % input image size (SSC)
 
-nClasses = 10;
-
+% create minibatchqueues for training and validation
 labelIDs = floor(linspace(255,0,nClasses));
-
-
 for ii = 1:nClasses
-    
     classNames(ii) = "C"+num2str(labelIDs(ii));
-    
 end
-
 
 imds = imageDatastore(imageStoreFolder+"/training_inputs",'FileExtensions','.mat','ReadFcn',@matReader);
 labelDir = imageStoreFolder+"/training_targets";
-
 pxds = pixelLabelDatastore(labelDir,classNames,labelIDs);
 ds = pixelLabelImageDatastore(imds,pxds);
 
 valimds = imageDatastore(imageStoreFolder+"/validation_inputs",'FileExtensions','.mat','ReadFcn',@matReader);
 vallabelDir = imageStoreFolder+"/validation_targets";
-
 valds = pixelLabelDatastore(vallabelDir,classNames,labelIDs);
 valds1 = pixelLabelImageDatastore(valimds,valds);
 
-tbl = countEachLabel(pxds);
-imageFreq = tbl.PixelCount ./ tbl.ImagePixelCount;
-classWeights = 0.01./imageFreq;
+tbl = countEachLabel(pxds); % number of each label in the training set
+imageFreq = tbl.PixelCount ./ tbl.ImagePixelCount; 
+classWeights = 0.01./imageFreq; % to be used for weighted loss function
 
 mbq = minibatchqueue(ds,...
     'MiniBatchSize',miniBatchSize,...
@@ -87,6 +86,7 @@ ylim([0 100])
 grid on;
 
 vel = [];
+iteration = 0;
 start = tic;
 
 for epoch = start_epoch:total_epochs
