@@ -8,7 +8,7 @@ nClasses = 10; % number of classes to be predicted by segmentation network
 % training_targets/ : containing single channel images that serve as the segmentation network targets (corresponding to the training_inputs/ directory)
 % validation_targets/ : containing single channel images that serve as the segmentation network targets (corresponding to the validation_inputs/ directory)
 
-imageStoreFolder = "../NClass_"+num2str(nClasses);
+imageStoreFolder = "NClass_"+num2str(nClasses);
 
 load_params = false; % true if you want to load model from a previous state
 load_epoch = 1; % if above true, from what epoch do you want to load?
