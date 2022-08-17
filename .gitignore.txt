@@ -1,3 +1,4 @@
-# exclude everything in this directory
+# exclude certain files
 *.asv
 *.mat
+*.DS_Store
