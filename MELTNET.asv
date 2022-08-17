@@ -14,18 +14,15 @@ end
 [~, ~, ~,segnetY] = dlfeval(@lossMELTNET_SEG, SEGparams, X, [], options.nClasses,SEGstate,false,[]);
 labelIDs = floor(linspace(255,0,options.nClasses));
 img3d = labelIDs(segnetY);
-
-% predict requires input images with a channel dimension, our output is
-% grayscale so this is added as a dummy dimension
 img4d(1,:,:,:) = img3d;
 img_SSCB = permute(img4d,[2 3 1 4]);
 
 % call the DAE network to convert from categorised to continuous melt rates
 DAEnetY = predict(DAEnet,img_SSCB);
 outside = extractdata(X(:,:,2,:)==0);
+DAEnetY(outside) = 0;
 % final melt rate recovered by reversing the normalisation done to melt
 % rates in the DAE network training set
 Y = (DAEnetY./(255/(options.clip_min-options.clip_max)))+options.clip_max;
-Y(outside) = 0;
 
 end

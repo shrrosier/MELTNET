@@ -20,5 +20,4 @@ end
 
 X = dlarray(X,'SSCB');
 
-
 MELTNET(X,DAEnet,params,state,"nClasses",10);
