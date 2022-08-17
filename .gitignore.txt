@@ -1,0 +1,3 @@
+# exclude everything in this directory
+*.asv
+*.mat
