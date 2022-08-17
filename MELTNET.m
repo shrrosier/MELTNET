@@ -1,7 +1,7 @@
 function Y = MELTNET(X,DAEnet,SEGparams,SEGstate,options)
 
 arguments
-    X (64,64,4,:)  % input image consisting of four bands representing bathymetry, draft, temperature and salinity
+    X (64,64,4,:) dlarray % input image consisting of four bands representing bathymetry, draft, temperature and salinity
     DAEnet SeriesNetwork % trained DAE network
     SEGparams struct % weights and biases from trained segmentation net
     SEGstate struct % normalization states from trained segmentation net

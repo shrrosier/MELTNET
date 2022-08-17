@@ -1,6 +1,6 @@
 clearvars;
 
-load('MELTNET_DAE_C10_E500.mat','DAEnet');
+load('MELTNET_DAE_C10_E500.mat','DAEnet','clip_min','clip_max');
 
 load('MELTNET_SEG_C10_E600.mat','params','state');
 
@@ -20,4 +20,6 @@ end
 
 X = dlarray(X,'SSCB');
 
-MELTNET(X,DAEnet,params,state,"nClasses",10);
+Y = MELTNET(X,DAEnet,params,state,"nClasses",10,"clip_min",clip_min,"clip_max",clip_max);
+
+
