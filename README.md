@@ -10,6 +10,7 @@ MELTNET is written entirely in MATLAB and makes use of the following MATLAB tool
 3. [Parallel computing toolbox](https://uk.mathworks.com/products/parallel-computing.html)
 
 ## How to
-
+MELTNET consists of two networks: 
+1. A segmentation network that converts input geometries into a single channel labelled melt rate map (referred to as MELTNET_SEG). MELTNET_SEG is trained on batches of 4-channel images (64x64x4xN) by calculating a loss function against target images. Training is done with the *trainMELTNET_SEG* function and requires two folders containing input test cases called *training_inputs* and *validation_inputs*, as well as corresponding folders containing the groundtruth segmented images in *training_targets* and *validation_targets*.
 
 ## License
