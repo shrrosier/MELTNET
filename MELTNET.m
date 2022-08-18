@@ -26,6 +26,6 @@ outside = extractdata(X(:,:,2,:)==0);
 % final melt rate recovered by reversing the normalisation done to melt
 % rates in the DAE network training set
 Y = (DAEnetY./(255/(options.clip_min-options.clip_max)))+options.clip_max;
-Y(outside) = 0;
+Y(outside) = nan;
 
 end
