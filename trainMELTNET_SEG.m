@@ -137,6 +137,8 @@ end
 
 function out = init_weights(sfilt,channels,nfilt)
 
+% initialise glorot weights
+
 filterSize = [sfilt sfilt];
 numChannels = channels;
 numFilters = nfilt;
@@ -150,6 +152,8 @@ out = initializeGlorot(sz,numOut,numIn);
 end
 
 function params = get_weights(nClasses,nfilt)
+
+% initialise network weights and biases
 
 nf = 2.^(5:8);
 nfb = [32,32,32,64,64,64,128,128,128,256,256,256,256,256,256,256,128,128,128,64,64,64,32,32,32,32,32,32];
@@ -220,6 +224,8 @@ end
 
 function state = initialise_state()
 
+% initialise state for the batchnorm function
+
 nf = [32,32,32,64,64,64,128,128,128,256,256,256,256,256,256,256,128,128,128,64,64,64,32,32,32,32,32,32];
 
 for ii = 1:numel(nf)
@@ -231,12 +237,16 @@ end
 
 function parameter = initializeOnes(sz)
 
+% initialise dlarray of ones
+
 parameter = ones(sz,'single');
 parameter = dlarray(parameter);
 
 end
 
 function parameter = initializeZeros(sz)
+
+% initialise dlarray of zeros
 
 parameter = zeros(sz,'single');
 parameter = dlarray(parameter);
