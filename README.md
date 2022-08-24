@@ -22,4 +22,5 @@ Melt rate prediction can be accomplished with the function *MELTNET*. This repos
 
 **Note:** the 6 digit number after each input/output filename is unique to that NEMO experiment. The validation set was selected randomly from the complete set of NEMO experiments, and the first 100 members of the validation set have been uploaded to this repository for testing purposes.
 
-## License
+## DOI
+[![DOI](https://zenodo.org/badge/524994872.svg)](https://zenodo.org/badge/latestdoi/524994872)
